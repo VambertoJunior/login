@@ -1,11 +1,9 @@
 package com.example.navegacao1.model.dados
 
-import androidx.compose.runtime.Composable
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
 import com.google.firebase.firestore.toObjects
 import com.example.navegacao1.model.dados.Usuario
-
 
 class UsuarioDAO {
 
@@ -23,18 +21,18 @@ class UsuarioDAO {
             }
     }
 
-    fun buscarPorNome(nome: String, onResult: (Usuario?) -> Unit) {
+    fun buscarPorNome(nome: String, callback: (Usuario?) -> Unit) {
         db.collection("usuarios").whereEqualTo("nome", nome).get()
             .addOnSuccessListener { document ->
                 if (!document.isEmpty) {
                     val usuario = document.documents[0].toObject<Usuario>()
-                    onResult(usuario)
+                    callback(usuario)
                 } else {
-                    onResult(null)
+                    callback(null)
                 }
             }
             .addOnFailureListener {
-                onResult(null)
+                callback(null)
             }
     }
 
