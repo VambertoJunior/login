@@ -1,6 +1,7 @@
 package com.example.login.telas
 
 import android.graphics.Color
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,33 +19,38 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.navegacao1.model.dados.UsuarioDAO
+import com.example.navegacao1.model.dados.Usuario
+
 
 @Composable
-fun telaLogin(navController: NavController, cadstroLogin: String, cadstroSenha: String){
+fun telaLogin(navController: NavController, usuarioDAO: UsuarioDAO) {
     var login by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
     var error by remember { mutableStateOf("") }
 
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        TextField(value = login, onValueChange = {login = it}, label = {Text("Login")})
-
+    ) {
+        TextField(value = login, onValueChange = { login = it }, label = { Text("Login") })
         Spacer(modifier = Modifier.height(8.dp))
-        TextField(value = senha, onValueChange = {senha = it}, label = {Text("Senha")})
-
+        TextField(value = senha, onValueChange = { senha = it }, label = { Text("Senha") })
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
-            if (login == cadstroLogin && senha == cadstroSenha){
-                navController.navigate("main")
-            } else{
-                error = "Error login ou senha, tente novamente."
+            usuarioDAO.buscarPorNome(login) { usuario ->
+                if (usuario != null && usuario.senha == senha) {
+                    navController.navigate("main")
+                } else {
+                    error = "Login ou senha incorretos"
+                    Toast.makeText(LocalContext.current, error, Toast.LENGTH_LONG).show()
+                }
             }
         }) {
             Text("Login")
@@ -52,8 +58,8 @@ fun telaLogin(navController: NavController, cadstroLogin: String, cadstroSenha: 
         Text(text = error, modifier = Modifier.padding(top = 8.dp))
 
         Spacer(modifier = Modifier.height(8.dp))
-        TextButton(onClick = {navController.navigate("cadastro")}) {
-            Text("Fazer se cadastra.")
+        TextButton(onClick = { navController.navigate("cadastro") }) {
+            Text("Fazer cadastro")
         }
     }
 }
