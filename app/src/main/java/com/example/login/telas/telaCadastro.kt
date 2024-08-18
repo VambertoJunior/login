@@ -18,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.navegacao1.model.dados.CadastroDAO
 import com.example.navegacao1.model.dados.Usuario
 
 @Composable
@@ -26,7 +25,6 @@ fun telaCadastro(navController: NavController, param: (Any, Any) -> Unit) {
     var login by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
     var error by remember { mutableStateOf("") }
-    val cadastroDAO = CadastroDAO()
 
     Column(
         modifier = Modifier
@@ -54,16 +52,7 @@ fun telaCadastro(navController: NavController, param: (Any, Any) -> Unit) {
         Button(onClick = {
             if (login.isNotBlank() && senha.isNotBlank()) {
                 val usuario = Usuario(nome = login, senha = senha)
-                cadastroDAO.adicionar(usuario) { success ->
-                    if (success) {
-                        navController.navigate("login")
-                    } else {
-                        error = "Falha ao criar usuário"
-                    }
                 }
-            } else {
-                error = "Login e senha são obrigatórios"
-            }
         }) {
             Text("Inscrever-se")
         }
