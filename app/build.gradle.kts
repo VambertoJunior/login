@@ -9,7 +9,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "login.ifpb.login"
+        applicationId = "login.ifpb.vamberto"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -52,6 +52,7 @@ android {
 
 dependencies {
 
+    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "299711474992",
+    "project_id": "login-vamberto",
+    "storage_bucket": "login-vamberto.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299711474992:android:399fce5987c1bab2a86cf5",
+        "android_client_info": {
+          "package_name": "login.ifpb.vamberto"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK-V-IfEewBJvKuWcFF92ltFWvFGOW6r0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
