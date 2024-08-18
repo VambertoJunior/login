@@ -18,31 +18,59 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.navegacao1.model.dados.CadastroDAO
+import com.example.navegacao1.model.dados.Usuario
 
 @Composable
-fun telaCadastro(navController: NavController, MCadastro:(String, String) -> Unit){
+fun telaCadastro(navController: NavController, param: (Any, Any) -> Unit) {
     var login by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
+    var error by remember { mutableStateOf("") }
+    val cadastroDAO = CadastroDAO()
 
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        TextField(value = login, onValueChange = {login = it}, label = { Text("Login")})
+    ) {
+        TextField(
+            value = login,
+            onValueChange = { login = it },
+            label = { Text("Login") }
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
-        TextField(value = senha, onValueChange = {senha = it}, label = {Text("Senha")})
+
+        TextField(
+            value = senha,
+            onValueChange = { senha = it },
+            label = { Text("Senha") }
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
+
         Button(onClick = {
-            MCadastro(login, senha)
-            navController.navigate("login")
+            if (login.isNotBlank() && senha.isNotBlank()) {
+                val usuario = Usuario(nome = login, senha = senha)
+                cadastroDAO.adicionar(usuario) { success ->
+                    if (success) {
+                        navController.navigate("login")
+                    } else {
+                        error = "Falha ao criar usuário"
+                    }
+                }
+            } else {
+                error = "Login e senha são obrigatórios"
+            }
         }) {
             Text("Inscrever-se")
         }
 
+        if (error.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = error, color = androidx.compose.ui.graphics.Color.Red)
+        }
     }
 }

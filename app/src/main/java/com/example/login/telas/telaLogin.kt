@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.navegacao1.model.dados.UsuarioDAO
+import kotlinx.coroutines.launch
 
 @Composable
 fun telaLogin(navController: NavController, usuarioDAO: UsuarioDAO) {
@@ -51,7 +52,9 @@ fun telaLogin(navController: NavController, usuarioDAO: UsuarioDAO) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
-            usuarioDAO.buscarPorNome(login) { usuario ->
+            // A chamada é suspensa e deve ser feita dentro de uma coroutine
+            kotlinx.coroutines.GlobalScope.launch {
+                val usuario = usuarioDAO.buscarPorNome(login)
                 if (usuario != null && usuario.senha == senha) {
                     navController.navigate("main")
                 } else {

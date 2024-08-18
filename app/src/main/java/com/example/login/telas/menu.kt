@@ -25,10 +25,14 @@ fun menu() {
         }
         composable("cadastro") {
             telaCadastro(navController) { login, senha ->
-                cadastroLogin = login
-                cadastroSenha = senha
+                cadastroLogin = login.toString()
+                cadastroSenha = senha.toString()
             }
         }
         composable("main") { telaPrincipal() }
     }
+}
+
+fun telaPrincipal() {
+    TODO("Not yet implemented")
 }
