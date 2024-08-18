@@ -71,8 +71,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.auth.ktx)
+    implementation(platform(libs.google.firebase.bom))
+    implementation(platform(libs.firebase.common.ktx))
     implementation(libs.firebase.firestore.ktx)
-    implementation(libs.firebase.common.ktx)
 }

@@ -1,14 +1,12 @@
 package com.example.navegacao1.model.dados
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.toObject
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.toObjects
-import com.example.navegacao1.model.dados.Usuario
 
 class UsuarioDAO {
 
-    private val db
-        get() = FirebaseFirestore.getInstance()
+    private val db = FirebaseFirestore.getInstance()
 
     fun buscar(callback: (List<Usuario>) -> Unit) {
         db.collection("usuarios").get()
